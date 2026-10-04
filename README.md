@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Bizcraft website
 
-## Getting Started
+Redesign of [bizcraft.co.in](https://www.bizcraft.co.in), built with Next.js 16 (App Router), Tailwind CSS 4, React Three Fiber, GSAP (ScrollTrigger) and anime.js v4. It includes an interactive 3D backpack and a configurator: fabric colour, logo upload, and spec-to-enquiry.
 
-First, run the development server:
+See [`docs/REDESIGN.md`](docs/REDESIGN.md) for the strategy, design system and open items.
+
+## Run it
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # http://localhost:3000
+npm run build && npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Where things live
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Path | What |
+| --- | --- |
+| `src/app/page.tsx` | Page composition (all sections) |
+| `src/lib/content.ts` | All copy and data: clients, products, process, timeline, swatches |
+| `src/components/site/` | Page sections, nav, configurator UI, contact form |
+| `src/components/intro/` | Unzip intro: GSAP pin/scrub orchestration (`IntroExperience`) and the 3D scene (`IntroScene`) |
+| `src/lib/intro.ts` | Shared intro state (rig values, phase) between GSAP, R3F and React |
+| `src/components/anim/` | anime.js layer: `useAnime` scope hook, Reveal, SplitHeading, Seam, CountUp, Scramble, Magnetic, Marquee |
+| `src/components/three/Bag.tsx` | GLB loading, fabric-tint shader, logo decal |
+| `src/components/three/*Scene.tsx` | Hero and configurator canvases |
+| `public/models/backpack.glb` | Optimised 3D model (1.3 MB) |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Re-optimising a 3D model
 
-## Learn More
+```bash
+npx @gltf-transform/cli optimize input.glb public/models/backpack.glb \
+  --compress meshopt --texture-compress webp --texture-size 2048
+```
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The fabric-tint shader expects light, neutral-grey fabric texels (around sRGB 161) in the base-colour map. Dark and saturated texels are left alone.
