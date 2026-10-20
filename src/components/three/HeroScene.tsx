@@ -1,8 +1,8 @@
 "use client";
 
-import { Suspense, useRef, type ReactNode } from "react";
+import { Suspense, useEffect, useRef, type ReactNode } from "react";
 import * as THREE from "three";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Float, PresentationControls } from "@react-three/drei";
 import { Bag } from "./Bag";
 import { Studio } from "./Studio";
@@ -35,6 +35,16 @@ function ScrollSpin({
   return <group ref={group}>{children}</group>;
 }
 
+/** On tall desktop stages, stand back so the headline around the bag stays readable. */
+function Frame() {
+  const camera = useThree((s) => s.camera);
+  const height = useThree((s) => s.size.height);
+  useEffect(() => {
+    camera.position.z = 7.6 * Math.max(1, (height / 640) * 0.86);
+  }, [camera, height]);
+  return null;
+}
+
 export default function HeroScene({ color }: { color: string }) {
   const wrap = useRef<HTMLDivElement>(null);
   const inView = useInView(wrap);
@@ -53,6 +63,7 @@ export default function HeroScene({ color }: { color: string }) {
         aria-hidden
       >
         <LoopKick active={inView && phase === "site"} />
+        <Frame />
         <Suspense fallback={null}>
           <PresentationControls
             enabled={!coarse}
@@ -75,7 +86,7 @@ export default function HeroScene({ color }: { color: string }) {
               </Float>
             </ScrollSpin>
           </PresentationControls>
-          <Studio />
+          <Studio rim shadowOpacity={0.7} />
         </Suspense>
       </Canvas>
     </div>

@@ -325,20 +325,23 @@ export function pop(el: Element | null, from = 0.82) {
   });
 }
 
-/** Infinite client-name ticker that eases down to a crawl on hover. */
+/** Infinite ticker that eases down to a crawl on hover. */
 export function Marquee({
   children,
   className,
   duration = 52000,
+  reverse = false,
 }: {
   children: ReactNode;
   className?: string;
   duration?: number;
+  /** Run left-to-right instead. */
+  reverse?: boolean;
 }) {
   const ref = useAnime<HTMLDivElement>((wrap) => {
     const track = wrap.firstElementChild as HTMLElement;
     const loop = animate(track, {
-      x: "-50%",
+      x: reverse ? ["-50%", "0%"] : "-50%",
       duration,
       ease: "linear",
       loop: true,
@@ -356,5 +359,34 @@ export function Marquee({
     <div ref={ref} className={className}>
       {children}
     </div>
+  );
+}
+
+/** Oversized background type that slides sideways as its section scrolls by. */
+export function Drift({
+  children,
+  className,
+  distance = "-30%",
+}: {
+  children: ReactNode;
+  className?: string;
+  distance?: string;
+}) {
+  const ref = useAnime<HTMLParagraphElement>((el) => {
+    animate(el, {
+      x: ["0%", distance],
+      ease: "linear",
+      autoplay: onScroll({
+        target: el,
+        enter: "bottom top",
+        leave: "top bottom",
+        sync: 0.5,
+      }),
+    });
+  });
+  return (
+    <p ref={ref} aria-hidden className={className}>
+      {children}
+    </p>
   );
 }

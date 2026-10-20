@@ -44,7 +44,7 @@ function Segmented<T extends string>({
         {options.map((o) => (
           <label
             key={o.id}
-            className="cursor-pointer rounded-full border-[1.5px] border-white/20 px-4 py-2 text-sm font-medium transition-colors hover:border-white/50 has-[:checked]:border-accent has-[:checked]:bg-accent has-[:checked]:text-ink has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent"
+            className="cursor-pointer rounded-md border border-white/20 px-3.5 py-2 font-mono text-xs uppercase transition-colors hover:border-white/50 has-[:checked]:border-accent has-[:checked]:bg-accent has-[:checked]:text-ink has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent"
           >
             <input
               type="radio"
@@ -126,7 +126,7 @@ export function Configurator() {
       c.width = img.width;
       c.height = img.height;
       const ctx = c.getContext("2d")!;
-      ctx.fillStyle = "#faf8f3";
+      ctx.fillStyle = "#efeeea";
       ctx.fillRect(0, 0, c.width, c.height);
       ctx.drawImage(img, 0, 0);
       ctx.fillStyle = "#4a4f57";
@@ -161,8 +161,9 @@ export function Configurator() {
   }
 
   return (
-    <div className="grid gap-4 lg:grid-cols-12">
-      <div className="stitch mat relative h-[360px] overflow-hidden rounded-3xl bg-paper shadow-[0_8px_24px_-12px_rgb(18_20_23/0.25)] max-lg:sticky max-lg:top-[4.75rem] max-lg:z-10 sm:h-[480px] lg:col-span-8 lg:h-auto lg:min-h-[720px] lg:shadow-none">
+    <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
+      {/* Photo-studio sweep: a lit white cyclorama inside the dark section. */}
+      <div className="relative h-[360px] overflow-hidden rounded-2xl bg-[radial-gradient(ellipse_70%_62%_at_50%_42%,#ffffff_0%,#efeeea_48%,#d6d4ce_100%)] text-ink shadow-[0_10px_30px_-12px_rgb(0_0_0/0.6)] max-lg:sticky max-lg:top-[4.75rem] max-lg:z-10 sm:h-[480px] lg:col-span-8 lg:h-auto lg:min-h-[720px]">
         <ConfiguratorScene
           color={swatch.hex}
           logo={logo}
@@ -172,7 +173,7 @@ export function Configurator() {
         <div className="pointer-events-none absolute inset-x-0 top-0 flex items-start justify-between p-6 md:p-8">
           <div>
             <p className="eyebrow text-ink-3">BZ-BP/01 — Rucksack</p>
-            <p className="display mt-2 text-3xl md:text-4xl">
+            <p className="display mt-3 text-3xl font-semibold uppercase tracking-[-0.04em] md:text-4xl">
               <ScrambleText text={colorName} chars="a-z" />
             </p>
           </div>
@@ -188,10 +189,10 @@ export function Configurator() {
       <div
         aria-label="Spec sheet"
         role="group"
-        className="flex flex-col gap-7 rounded-3xl bg-ink p-7 text-paper md:p-8 lg:col-span-4"
+        className="flex flex-col gap-7 rounded-2xl border border-white/10 bg-night-2 p-7 text-paper md:p-8 lg:col-span-4"
       >
         <div className="flex items-baseline justify-between border-b border-white/15 pb-5">
-          <p className="display text-2xl">Spec sheet</p>
+          <p className="display text-xl font-semibold uppercase tracking-[-0.03em]">Spec sheet</p>
           <p className="eyebrow text-white/50">No. BZ-BP/01</p>
         </div>
 
@@ -207,7 +208,7 @@ export function Configurator() {
               <label
                 key={s.name}
                 title={s.name}
-                className="relative aspect-square cursor-pointer rounded-full border border-white/20 transition-transform hover:scale-105 has-[:checked]:ring-2 has-[:checked]:ring-accent has-[:checked]:ring-offset-[3px] has-[:checked]:ring-offset-ink has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-white"
+                className="relative aspect-square cursor-pointer rounded-full border border-white/20 transition-transform hover:scale-105 has-[:checked]:ring-2 has-[:checked]:ring-accent has-[:checked]:ring-offset-[3px] has-[:checked]:ring-offset-night-2 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-white"
                 style={{ background: s.hex }}
               >
                 <input
@@ -230,7 +231,7 @@ export function Configurator() {
         <div>
           <p className="eyebrow text-white/55">02 · Your logo</p>
           <div className="mt-3 flex flex-wrap items-center gap-2">
-            <label className="btn btn-ghost h-11 cursor-pointer border-white/30 text-sm hover:border-accent hover:bg-accent hover:text-ink has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-accent">
+            <label className="btn btn-ghost h-11 cursor-pointer hover:border-accent hover:bg-accent has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-accent">
               <Upload size={16} aria-hidden />
               {logoName ? "Replace logo" : "Upload logo"}
               <input
@@ -282,14 +283,14 @@ export function Configurator() {
           <button
             type="button"
             onClick={sendSpec}
-            className="btn btn-accent w-full justify-center hover:bg-paper hover:text-ink"
+            className="btn btn-accent w-full justify-center"
           >
             Send this spec <ArrowRight size={18} aria-hidden />
           </button>
           <button
             type="button"
             onClick={saveImage}
-            className="btn btn-ghost w-full justify-center border-white/30 hover:border-paper hover:bg-paper hover:text-ink"
+            className="btn btn-ghost w-full justify-center"
           >
             <Download size={16} aria-hidden /> Save preview image
           </button>

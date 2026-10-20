@@ -201,14 +201,13 @@ export function IntroExperience({ children }: { children: ReactNode }) {
 
       <div
         data-intro
-        className="absolute inset-x-0 top-0 z-40 h-[100svh] cursor-pointer overflow-hidden"
+        className="absolute inset-x-0 top-0 z-40 h-[100svh] cursor-pointer overflow-hidden text-ink"
         onClick={play}
       >
         <div data-intro-stage className="absolute inset-0 bg-canvas">
-          <div className="mat pointer-events-none absolute inset-0 [mask-image:radial-gradient(ellipse_at_50%_50%,black_25%,transparent_75%)]" />
           <p
             aria-hidden
-            className="display pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 select-none text-center text-[22vw] leading-none text-ink/[0.035]"
+            className="display pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 select-none whitespace-nowrap text-center text-[16vw] leading-none tracking-[-0.06em] text-ink/[0.035]"
           >
             bizcraft
           </p>

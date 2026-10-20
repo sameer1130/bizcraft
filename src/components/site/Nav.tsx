@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
 import { animate, stagger } from "animejs";
 import { EASE } from "@/components/anim/Anim";
 import { prefersReducedMotion } from "@/components/anim/useAnime";
@@ -43,33 +43,33 @@ export function Nav() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,backdrop-filter] duration-300 ${
+      className={`fixed inset-x-0 top-0 z-50 text-paper transition-[background-color,box-shadow,backdrop-filter] duration-300 ${
         scrolled || open
-          ? "bg-canvas/85 shadow-[0_1px_0_var(--color-line)] backdrop-blur-md"
+          ? "bg-night/90 shadow-[0_1px_0_rgb(255_255_255/0.08)] backdrop-blur-xl"
           : "bg-transparent"
       }`}
     >
       <nav
         aria-label="Primary"
-        className="mx-auto flex h-18 max-w-[1320px] items-center justify-between px-5 md:px-8"
+        className="mx-auto flex h-18 max-w-[1440px] items-center justify-between px-5 md:px-8"
       >
         <a href="#top" aria-label="Bizcraft home" className="shrink-0">
           <Image
-            src="/brand/logo-dark.png"
+            src="/brand/logo.png"
             alt="Bizcraft — delivering bags with excellence"
             width={216}
             height={93}
             priority
-            className="h-10 w-auto"
+            className="h-9 w-auto"
           />
         </a>
 
-        <ul className="hidden items-center gap-8 lg:flex">
+        <ul className="hidden items-center gap-1 rounded-full border border-white/10 bg-white/[0.04] p-1 backdrop-blur lg:flex">
           {links.map((l) => (
             <li key={l.href}>
               <a
                 href={l.href}
-                className="text-[0.95rem] font-medium text-ink-2 transition-colors hover:text-ink"
+                className="eyebrow block rounded-full px-4 py-2 text-white/70 transition-colors hover:bg-white/10 hover:text-paper"
               >
                 {l.label}
               </a>
@@ -80,16 +80,16 @@ export function Nav() {
         <div className="flex items-center gap-3">
           <a
             href="tel:+912226127744"
-            className="hidden font-mono text-sm text-ink-2 hover:text-ink xl:block"
+            className="eyebrow hidden text-white/60 hover:text-paper xl:block"
           >
             +91 22 2612 7744
           </a>
           <a href="#contact" className="btn btn-accent hidden h-11 sm:inline-flex">
-            Get a quote
+            Get a quote <ArrowUpRight size={15} aria-hidden />
           </a>
           <button
             type="button"
-            className="grid size-11 place-items-center rounded-full border-[1.5px] border-ink/20 lg:hidden"
+            className="grid size-11 place-items-center rounded-full border border-white/20 lg:hidden"
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? "Close menu" : "Open menu"}
@@ -103,16 +103,17 @@ export function Nav() {
       <div
         id="mobile-menu"
         hidden={!open}
-        className="h-[calc(100dvh-4.5rem)] border-t border-line bg-canvas px-5 pt-6 lg:hidden"
+        className="h-[calc(100dvh-4.5rem)] border-t border-white/10 bg-night px-5 pt-6 lg:hidden"
       >
         <ul className="flex flex-col">
-          {[...links, { href: "#contact", label: "Contact" }].map((l) => (
-            <li key={l.href} className="border-b border-line">
+          {[...links, { href: "#contact", label: "Contact" }].map((l, i) => (
+            <li key={l.href} className="border-b border-white/10">
               <a
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className="display block py-4 text-4xl"
+                className="display flex items-baseline gap-4 py-4 text-3xl uppercase"
               >
+                <span className="eyebrow text-accent">0{i + 1}</span>
                 {l.label}
               </a>
             </li>

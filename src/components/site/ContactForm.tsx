@@ -48,8 +48,8 @@ export function ContactForm() {
     const anims = [
       animate(banner.current!, { opacity: [0, 1], y: [-10, 0], duration: 700, ease: EASE, delay: 450 }),
       animate(fields, {
-        borderColor: ["#e85d1f", "#d8d1c4"],
-        boxShadow: ["0 0 0 4px rgb(232 93 31 / 0.25)", "0 0 0 0px rgb(232 93 31 / 0)"],
+        borderColor: ["#ff5a1f", "rgba(255,255,255,0.22)"],
+        backgroundColor: ["rgba(255,90,31,0.16)", "rgba(255,90,31,0)"],
         duration: 1600,
         ease: "outQuad",
         delay: stagger(120, { start: 650 }),
@@ -84,23 +84,23 @@ export function ContactForm() {
     <form
       ref={form}
       onSubmit={onSubmit}
-      className="rounded-3xl bg-paper p-6 shadow-[0_1px_0_var(--color-line)] md:p-10"
+      className="rounded-2xl border border-white/10 bg-night-2 p-6 md:p-10"
     >
       {fromConfigurator ? (
         <p
           ref={banner}
-          className="eyebrow mb-6 flex items-center gap-2 rounded-full bg-accent/15 px-4 py-2 text-accent-ink"
+          className="eyebrow mb-6 flex items-center gap-2 rounded-md bg-accent/15 px-4 py-2.5 text-accent"
         >
           <Check size={14} aria-hidden /> Your configurator spec is added below
         </p>
       ) : null}
-      <div className="grid gap-5 sm:grid-cols-2">
+      <div className="grid gap-x-8 gap-y-7 sm:grid-cols-2">
         <Field label="Your name" name="name" autoComplete="name" required />
         <Field label="Company" name="company" autoComplete="organization" required />
         <Field label="Work email" name="email" type="email" autoComplete="email" required />
         <Field label="Phone" name="phone" type="tel" autoComplete="tel" />
         <label className="block">
-          <span className="mb-2 block text-sm font-semibold">What do you need?</span>
+          <span className="eyebrow block text-white/60">What do you need?</span>
           <select name="product" className="field" defaultValue="Backpacks">
             {products.map((p) => (
               <option key={p.name}>{p.name}</option>
@@ -110,7 +110,7 @@ export function ContactForm() {
           </select>
         </label>
         <label className="block">
-          <span className="mb-2 block text-sm font-semibold">Quantity</span>
+          <span className="eyebrow block text-white/60">Quantity</span>
           <select name="quantity" className="field" defaultValue="Not sure yet">
             {quantities.map((q) => (
               <option key={q}>{q}</option>
@@ -118,7 +118,7 @@ export function ContactForm() {
           </select>
         </label>
         <label className="block sm:col-span-2">
-          <span className="mb-2 block text-sm font-semibold">Tell us about the project</span>
+          <span className="eyebrow block text-white/60">Tell us about the project</span>
           <textarea
             name="message"
             rows={5}
@@ -127,14 +127,14 @@ export function ContactForm() {
           />
         </label>
       </div>
-      <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
-        <p className="max-w-sm text-sm text-ink-3" aria-live="polite">
+      <div className="mt-10 flex flex-wrap items-center justify-between gap-4">
+        <p className="max-w-sm text-sm text-white/60" aria-live="polite">
           {sent
             ? "Your email app should now be open with everything filled in — just hit send."
             : `Prefer to talk? Call ${company.phone}.`}
         </p>
         <button type="submit" className="btn btn-accent">
-          Send enquiry <ArrowRight size={18} aria-hidden />
+          Send enquiry <ArrowRight size={16} aria-hidden />
         </button>
       </div>
     </form>
@@ -147,9 +147,9 @@ function Field({
 }: { label: string } & React.InputHTMLAttributes<HTMLInputElement>) {
   return (
     <label className="block">
-      <span className="mb-2 block text-sm font-semibold">
+      <span className="eyebrow block text-white/60">
         {label}
-        {props.required ? <span className="text-accent-ink"> *</span> : null}
+        {props.required ? <span className="text-accent"> *</span> : null}
       </span>
       <input className="field" {...props} />
     </label>
