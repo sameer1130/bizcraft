@@ -1,15 +1,19 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, IBM_Plex_Mono } from "next/font/google";
+import { Martian_Mono, Space_Grotesk, Unbounded } from "next/font/google";
 import "./globals.css";
 
-const archivo = Archivo({
-  variable: "--font-archivo",
+const unbounded = Unbounded({
+  variable: "--font-unbounded",
   subsets: ["latin"],
-  axes: ["wdth"],
 });
 
-const plexMono = IBM_Plex_Mono({
-  variable: "--font-plex-mono",
+const grotesk = Space_Grotesk({
+  variable: "--font-grotesk",
+  subsets: ["latin"],
+});
+
+const martian = Martian_Mono({
+  variable: "--font-martian",
   subsets: ["latin"],
   weight: ["400", "500"],
 });
@@ -33,14 +37,14 @@ const noJs =
   "[data-hero],[data-split],[data-reveal],[data-reveal] > *{opacity:1!important}[data-intro]{display:none!important}";
 
 export const viewport: Viewport = {
-  themeColor: "#f2eee6",
+  themeColor: "#0b0c0e",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en-IN"
-      className={`${archivo.variable} ${plexMono.variable} antialiased`}
+      className={`${unbounded.variable} ${grotesk.variable} ${martian.variable} antialiased`}
     >
       <head>
         <noscript>

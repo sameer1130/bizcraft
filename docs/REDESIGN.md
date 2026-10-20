@@ -45,9 +45,18 @@ Phase 2 pages: one page per category with photography, an OEM landing page, case
 
 ## 5. Visual system
 
-- **Canvas** `#f2eee6` (unbleached cotton), **Ink** `#121417`, one accent, **Saffron** `#e85d1f`, taken from the orange in the Bizcraft wing mark.
-- **Type:** Archivo variable at 116% width and weight 800 for headlines (industrial, confident); IBM Plex Mono for labels, like a tech pack or care label.
-- **Motifs from the craft:** dashed *stitch* outlines on cards, a *cutting-mat* grid behind product stages, and "spec sheet" language in the configurator.
+Revised on 2026-10-20. The first pass (cream canvas, cutting-mat grid, dashed stitch outlines on cards) read as generic and flat, so the page moved to a darker, more technical look, borrowing from technical-gear and product sites: Aer's wide uppercase type laid over the product, Peak Design's bold split colour blocks, and Nothing's mono tech labels.
+
+- **Colour:** dark sections alternate with light ones. **Night** `#0b0c0e` (hero, configurator, factory, contact, footer, with a light film grain), **Paper** `#f1f0ec` (solutions, range, story) and one accent, **Signal orange** `#ff5a1f`, a brighter version of the wing-mark orange. On light backgrounds, small orange text uses `#c2410c` to meet contrast. **Canvas** `#f2eee6` is kept only for the unzip intro stage.
+- **Type:** [Unbounded](https://fonts.google.com/specimen/Unbounded) for display (wide, geometric, uppercase for the big statements), [Space Grotesk](https://fonts.google.com/specimen/Space+Grotesk) for body text, and [Martian Mono](https://fonts.google.com/specimen/Martian+Mono) for labels, buttons and nav.
+- **Layout moves:**
+  - **Hero:** the headline frames the 3D bag ("Bags built" top-left, "to your brief." bottom-right), with the bag in front of the type.
+  - **Clients:** two crossed marquee tapes span the dark-to-light seam.
+  - **Solutions:** an editorial index whose rows flood orange on hover.
+  - **Range:** a poster-scale type list with a live detail card.
+  - **Story:** outlined years.
+  - **Purpose:** a full-bleed orange band.
+  - **Footer:** a large wordmark.
 - **Motion:** [anime.js v4](https://animejs.com) drives all UI animation (see §6a). The bag sways gently, and everything is turned off under `prefers-reduced-motion`.
 
 ## 6. 3D implementation
@@ -66,11 +75,12 @@ All animation goes through `src/components/anim/`. `useAnime` wraps anime.js `cr
 | --- | --- | --- |
 | Hero intro | Headline letters rise out of a clipped baseline. The eyebrow dot springs in. Copy and CTAs follow. | `splitText`, `createTimeline`, `stagger`, `spring` |
 | Hero stats | "2003" scrambles through digits; 120 / 120+ / 50+ count up | `scrambleText`, `animate` on an object + `utils.round` |
-| Section dividers | A dashed **stitch seam** sews itself across the page in step with scroll | `createDrawable` (SVG mask) + `onScroll({ sync })` |
 | Section headings | Words rise in sequence as they scroll in | `splitText` + `onScroll` |
 | Cards, range grid, timeline | Staggered fade/lift | `animate` + `stagger` + `onScroll` |
-| Factory | Vertical seam stitches down the 5-step process; 120 and 70%+ count up | `createDrawable`, `onScroll` |
-| Client ticker | Infinite marquee that slows to a crawl on hover | `animate` loop, tweening the animation's `speed` |
+| Factory | A dashed seam stitches along the 5-step process (across on desktop, down on mobile); 120 and 70%+ count up | `createDrawable`, `onScroll` |
+| Client tapes | Two crossed marquees running in opposite directions; each slows to a crawl on hover | `animate` loop, tweening the animation's `speed` |
+| Factory backdrop | Oversized "Bhiwandi" type drifts sideways as the section scrolls | `animate` + `onScroll({ sync })` |
+| Range | Hovered category lights up; the side card's number scrambles to match | `scrambleText` |
 | CTAs | Magnetic pull toward the cursor, elastic return (fine pointers only) | `createAnimatable` |
 | Configurator | Colour name scrambles to the new value; swatches and options spring on select | `scrambleText`, `spring` |
 | Spec → form | Banner drops in; prefilled fields glow in sequence | `animate` + `stagger` |

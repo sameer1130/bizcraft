@@ -7,12 +7,25 @@ import { BAG_HEIGHT } from "./Bag";
  * Self-contained studio lighting — no HDRI download, so the scene renders
  * offline and adds nothing to the network waterfall.
  */
-export function Studio({ shadowOpacity = 0.42 }: { shadowOpacity?: number }) {
+export function Studio({
+  shadowOpacity = 0.42,
+  rim = false,
+}: {
+  shadowOpacity?: number;
+  /** Warm + cool back lights that pick the bag's edges out of a dark stage. */
+  rim?: boolean;
+}) {
   return (
     <>
       <ambientLight intensity={0.35} />
       <directionalLight position={[3, 5, 4]} intensity={1.4} />
       <directionalLight position={[-4, 2, -3]} intensity={0.5} />
+      {rim ? (
+        <>
+          <directionalLight position={[-4, 1.5, -3]} intensity={2.6} color="#ff7a3d" />
+          <directionalLight position={[4, 2.5, -3]} intensity={1.6} color="#a9bcff" />
+        </>
+      ) : null}
       <Environment resolution={256} frames={1}>
         <Lightformer
           form="rect"
